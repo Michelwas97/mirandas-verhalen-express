@@ -1,0 +1,10 @@
+<% for (let item of data) { %>
+    <li class="view-list-item">
+        <img class="view-img" src="<%= item.imgUrl %>" alt="Cover image of <%= item.title %>">
+        <div class="view-info">
+            <h3 class="view-title"><%= item.title %></h3>
+            <p class="view-summary"><%= item.summary %></p>
+        </div>
+        <button class="view-button"></button>
+    </li>
+<% } %>
