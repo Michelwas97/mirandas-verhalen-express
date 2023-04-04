@@ -190,6 +190,8 @@ h1 {
     font-family: 'Poppins', Arial, sans-serif;
     font-size: 3rem;
 
+    letter-spacing: -0.1rem;
+
     margin-bottom: 16px;
 
     color: var(--text-color-primary);
@@ -285,7 +287,6 @@ article {
 
     position: relative;
     min-height: 100vh;
-    min-height: -webkit-fill-available;
 
     padding: 0 1.2rem 4rem;
 
@@ -329,7 +330,7 @@ article:first-of-type a::before {
     border-radius: 50%;
     background-color: transparent;
 
-    background-image: url(../images/circle-text-final.svg);
+    background-image: url(/images/circle-text-final.svg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -366,6 +367,7 @@ main {
     max-width: 1200px;
 
     margin: 0 auto;
+    padding: 4rem 0;
 
     background-color: var(--bg-color-main);
 }
@@ -465,7 +467,11 @@ main section > figure figcaption {
         .view-button-appearance circle {
             stroke-width: 4px;
         }
-
+        
+        .hide {
+            display: none;
+        }
+        
 /* 
  * Repsonsive css code mobile > tablet
  */
@@ -478,6 +484,11 @@ main section > figure figcaption {
     /* 
      * sizing of landing area
      */
+
+    article {
+        height: 100vh;
+        min-height: -webkit-fill-available;
+    }
 
     article:first-of-type img:first-of-type {
         scale: 1;
@@ -498,6 +509,10 @@ main section > figure figcaption {
     #router-view li:nth-child(even) {
         background: var(--primary-color-orange);
     }
+
+        #router-view li:nth-child(even) h3 {
+            color: var(--primary-color-darkpurple);
+        }
 
     #router-view li:nth-child(even) .view-button-appearance path {
         fill: var(--primary-color-darkpurple);

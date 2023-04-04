@@ -1,4 +1,12 @@
-<script type="module" src="../../static/scripts/synthesizer.js"></script>
+<script type="module" src="/scripts/synthesizer.js"></script>
+<script>
+    if('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js')
+        .then(function(registration) {
+            console.log('Service Worker Registered');
+        });
+    }
+</script>
 </body>
 
 </html>
