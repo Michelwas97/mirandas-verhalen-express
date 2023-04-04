@@ -4,6 +4,10 @@ const cacheName = 'mirandas-verhalen-cache-v1';
 // List of urls to cache
 const urlsToCache = [
   '/offline',
+  '/styles/style.css',
+  '/scripts/synthesizer.js',
+  '/images/blob-left.svg',
+  '/images/circle-text-final.svg',
 ];
 
 // Install event listener for the service worker
