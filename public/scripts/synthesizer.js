@@ -52,5 +52,9 @@ export async function setupSpeechSynthesis() {
   }
 
   window.addEventListener("load", () => {
-    setupSpeechSynthesis();
+    var online = navigator.onLine;
+
+    if (online) {
+      setupSpeechSynthesis();
+    }
   });

@@ -10,6 +10,12 @@ const offlineRouter = require('./routes/offline');
 
 app.use(express.static('public'))
 
+// Set cache headers
+app.use((req, res, next) => {
+    res.setHeader('Cache-Control', 'max-age=' + 365 * 24 * 60 * 60);
+    next();
+});
+
 app.set('view engine', 'ejs')
 
 /** ROUTES **/

@@ -8,6 +8,16 @@ const urlsToCache = [
   '/scripts/synthesizer.js',
   '/images/blob-left.svg',
   '/images/circle-text-final.svg',
+  '/images/circle-text.svg',
+  '/images/hector-zoekt-zijn-kleur.png',
+  '/images/laden-text.svg',
+  '/images/profile-img.jpeg',
+  '/images/story-thumbnail.jpg',
+  '/fonts/Poppins-Regular.woff2',
+  '/fonts/Poppins-Regular.woff',
+  '/fonts/Poppins-Regular.ttf',
+  '/fonts/Poppins-Regular.svg',
+  '/fonts/Poppins-Regular.eot',
 ];
 
 // Install event listener for the service worker

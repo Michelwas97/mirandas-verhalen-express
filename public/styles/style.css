@@ -471,6 +471,18 @@ main section > figure figcaption {
         .hide {
             display: none;
         }
+
+        .show {
+            display: block;
+        }
+
+    .offline {
+        font-size: 2rem;
+        color: var(--text-color-primary);
+        text-align: center;
+
+        margin: 6rem 6rem 0rem;
+    }
         
 /* 
  * Repsonsive css code mobile > tablet
