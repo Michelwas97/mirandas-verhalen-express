@@ -6,19 +6,37 @@ export async function setupSpeechSynthesis() {
     const apiStoryList = await fetch('/api/stories');
     const apiStoryListJson = await apiStoryList.json();
 
+    const summaries = document.querySelectorAll(".view-summary");
+    const playButtons = document.querySelectorAll("[aria-label='play story knop']");
+    const pauseButtons = document.querySelectorAll("[aria-label='pause story knop']");
+
+    summaries.forEach((summary) => {
+      summary.classList.add("hide");
+    });
+
+    playButtons.forEach((playButton) => {
+      playButton.classList.add("show");
+    });
+
+    pauseButtons.forEach((pauseButton) => {
+      pauseButton.classList.add("hide");
+    });
+
     if (routerView.classList.contains("story-state")) {
       const storyList = document.querySelector(".view-list");
-      const playButton = document.querySelector("[aria-label='play story knop']");
-      const pauseButton = document.querySelector("[aria-label='pause story knop']");
 
       storyList.addEventListener('click', (e) => {
         const listItem = e.target.closest('.view-list-item');
-  
+        const playButton = listItem.querySelector("[aria-label='play story knop']");
+        const pauseButton = listItem.querySelector("[aria-label='pause story knop']");
+        
         // Check if synth is speaking
         if (synth.speaking) {
           synth.cancel();
-          playButton.classList.toggle("hide");
-          pauseButton.classList.toggle("hide");
+          playButton.classList.remove("hide");
+          playButton.classList.add("show");
+          pauseButton.classList.remove("show");
+          pauseButton.classList.add("hide");
           return;
         }
   
@@ -42,8 +60,10 @@ export async function setupSpeechSynthesis() {
           };
   
           synth.speak(summaryUtterance);
-          playButton.classList.toggle("hide");
-          pauseButton.classList.toggle("hide");
+          playButton.classList.remove("show");
+          playButton.classList.add("hide");
+          pauseButton.classList.remove("hide");
+          pauseButton.classList.add("show");
         } else {
           console.log("Not a story summary");
         }

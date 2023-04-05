@@ -271,6 +271,7 @@ Above is the tweaked version of the reset css to my whishes
         url('/MirandasVerhalen/static/fonts/Poppins-Regular.svg') format('svg');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }
 
 body {
@@ -443,10 +444,6 @@ main section > figure figcaption {
         color: var(--color-white);
 
         margin: 0 0 0.5rem;
-    }
-
-    .view-summary {
-        display: none;
     }
 
 .view-button {
