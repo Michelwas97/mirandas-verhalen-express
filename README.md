@@ -93,6 +93,10 @@ Last but not least I arrived at the critcical rendering criteria, I researched a
 ![Cache control example](./public/images/documentation-images/cachecontrol-example.png)
 ![Swap example](./public/images/documentation-images/font-swap-example.png)
 
+### Activity diagram
+
+![Activity diagram](./public/images/documentation-images/Activity%20diagram.jpg)
+
 [Live demo](bandicoot-underclothes.cyclic.app/)
 
 <!-- replace the code in the /docs folder with your own, so you can showcase your work with GitHub Pages 🌍 -->
