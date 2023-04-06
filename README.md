@@ -27,6 +27,8 @@ After doing this I created a ejs loop which creates story list items for each it
 The next challenge at hand was making the web app actually downloadable. For this we need a manifest.json file which needs to be in the public folder which is used in express. After adding the manifest.json file the last thing to do is to add it in de head like this.
 ![Manifest link in head](./public/images/documentation-images/manifest-example.png)
 
+![manifest template example](./public/images/documentation-images/manifest-template-example.png)
+
 If the manifest is linked correctly and all the information neccesary for download is filled in then your application becomes downloadable and runnable as a actual Progressive Web App.
 ![Manifest download example](./public/images/documentation-images/download-example.png)
 
@@ -39,16 +41,21 @@ With this information I started doing research on how I would make these functio
 For the install function I created a event, which is triggered when the service worker is installed. The code inside the event listener caches the URLs specified in urlsToCache. First, the cache is opened using caches.open(), and then the assets are added to the cache using cache.addAll(). The event.waitUntil() method makes sure that the service worker will only be installed after the caching is completed.
 
 For the activate I created a event, which is triggered when the service worker becomes active. The code inside the event listener deletes old caches that are no longer needed. It uses caches.keys() to get a list of cache names, and then it filters out the caches that have a name different from cacheName. Finally, it deletes the filtered caches using caches.delete().
+![install and activate example](./public/images/documentation-images/install-activate-example.png)
 
 For the fetch I created a event, when the event is triggered, the service worker checks if there is a cache for the request using caches.match(event.request). If there is a cache, it is returned immediately using return cachedResponse. If there is no cache available for the request, the service worker performs a network request using fetch(event.request). If a valid response is received from the network, with a status of 200 and a response type of basic, it is cached using cache.put(event.request, responseToCache) and returned using return networkResponse. If there is no valid response from the network or if a network error happens, the service worker returns the offline page using return caches.match('/offline').
+![Fetch example](./public/images/documentation-images/fetch-example.png)
 
 These functions will make sure that the service-wroker allows the webapplication to be used offline by returning carched resources even without internect connection. This greatly improves the user experience by providing faster page load and reducing the number of network requests made.
 
 ### Week 3
 
 After finishing the service-worker.js I still had some refactoring to do because in the assignment I had to make sure that the javascript was converted to the service side but as my API is only usable on clientside I had to refactor some css class manipulation in a different way. I used to have a hide class on stories which would be toggled in the clientside javascript. After refactoring I swapped the logic from the stories always being hidden to always available and then only manipulate in javascript to hide them. This way when there is no javascript active the user is still able to read the stories.
+![class controle example](./public/images/documentation-images/class-controll-example.png)
 
 Last but not least I arrived at the critcical rendering criteria, I researched about minify using Gulp. It is a nice way of optimalizing the performance of the application. As my web app is quite small it wasn't necessary to use this though. Instead I used cache control on my header and used the font-face display swap to optimalize.
+![Cache control example](./public/images/documentation-images/cachecontrol-example.png)
+![Swap example](./public/images/documentation-images/font-swap-example.png)
 
 [Live demo](bandicoot-underclothes.cyclic.app/)
 
