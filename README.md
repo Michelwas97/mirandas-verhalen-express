@@ -51,6 +51,7 @@ These functions will make sure that the service-wroker allows the webapplication
 ### Week 3
 
 After finishing the service-worker.js I still had some refactoring to do because in the assignment I had to make sure that the javascript was converted to the service side but as my API is only usable on clientside I had to refactor some css class manipulation in a different way. I used to have a hide class on stories which would be toggled in the clientside javascript. After refactoring I swapped the logic from the stories always being hidden to always available and then only manipulate in javascript to hide them. This way when there is no javascript active the user is still able to read the stories.
+
 ![class controle example](./public/images/documentation-images/class-controll-example.png)
 
 Last but not least I arrived at the critcical rendering criteria, I researched about minify using Gulp. It is a nice way of optimalizing the performance of the application. As my web app is quite small it wasn't necessary to use this though. Instead I used cache control on my header and used the font-face display swap to optimalize.
