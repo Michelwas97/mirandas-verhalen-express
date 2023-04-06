@@ -25,7 +25,30 @@ After implementing the opensheet api logic with a fetch I started on refactoring
 After doing this I created a ejs loop which creates story list items for each item in the array storyData. Then I need to verify if clicked list item is matched with the right ID. By using the event.target.closest() I can solve the problem of matching the list item index with the story.id. During this process I ran into the problem of matching strings with numbers, it took me quite a while to actually figure this out but by consulting a classmate we figured it out, we fixed it using index.toString(). After after we fixed this issue the synthesizer functionality finally worked. 
 
 The next challenge at hand was making the web app actually downloadable. For this we need a manifest.json file which needs to be in the public folder which is used in express. After adding the manifest.json file the last thing to do is to add it in de head like this.
-![Manifest link in head](./public/images/documentation-images/Screenshot%202023-04-06%20at%2014.13.50.png)
+![Manifest link in head](./public/images/documentation-images/manifest-example.png)
+
+If the manifest is linked correctly and all the information neccesary for download is filled in then your application becomes downloadable and runnable as a actual Progressive Web App.
+![Manifest download example](./public/images/documentation-images/download-example.png)
+
+### Week 2
+
+During week 2 we had to implement a service-worker which would handle the offline experience of a user so that even if there is no internet some experience can be happening. This part of the project was quite hard, Actually connecting to the service-worker was quite a hasle. I found out that my app.use public wasn't coded correctly and wasted a lot of time on that. After that I asked some help from a classmate setting it up, she told me that I needed 4 functions for it to work properly, a register, a install, an activate and last but not least a fetch function. 
+
+With this information I started doing research on how I would make these functions in order to make my service worker actually work.
+
+For the install function I created a event, which is triggered when the service worker is installed. The code inside the event listener caches the URLs specified in urlsToCache. First, the cache is opened using caches.open(), and then the assets are added to the cache using cache.addAll(). The event.waitUntil() method makes sure that the service worker will only be installed after the caching is completed.
+
+For the activate I created a event, which is triggered when the service worker becomes active. The code inside the event listener deletes old caches that are no longer needed. It uses caches.keys() to get a list of cache names, and then it filters out the caches that have a name different from cacheName. Finally, it deletes the filtered caches using caches.delete().
+
+For the fetch I created a event, when the event is triggered, the service worker checks if there is a cache for the request using caches.match(event.request). If there is a cache, it is returned immediately using return cachedResponse. If there is no cache available for the request, the service worker performs a network request using fetch(event.request). If a valid response is received from the network, with a status of 200 and a response type of basic, it is cached using cache.put(event.request, responseToCache) and returned using return networkResponse. If there is no valid response from the network or if a network error happens, the service worker returns the offline page using return caches.match('/offline').
+
+These functions will make sure that the service-wroker allows the webapplication to be used offline by returning carched resources even without internect connection. This greatly improves the user experience by providing faster page load and reducing the number of network requests made.
+
+### Week 3
+
+After finishing the service-worker.js I still had some refactoring to do because in the assignment I had to make sure that the javascript was converted to the service side but as my API is only usable on clientside I had to refactor some css class manipulation in a different way. I used to have a hide class on stories which would be toggled in the clientside javascript. After refactoring I swapped the logic from the stories always being hidden to always available and then only manipulate in javascript to hide them. This way when there is no javascript active the user is still able to read the stories.
+
+Last but not least I arrived at the critcical rendering criteria, I researched about minify using Gulp. It is a nice way of optimalizing the performance of the application. As my web app is quite small it wasn't necessary to use this though. Instead I used cache control on my header and used the font-face display swap to optimalize.
 
 [Live demo](bandicoot-underclothes.cyclic.app/)
 
