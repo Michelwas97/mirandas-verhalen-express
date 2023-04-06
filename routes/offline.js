@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router();
 
-/** Home route **/
+/** Offline page route **/
 router.get('/offline', (req, res) => {
     res.render('pages/offline');
 })

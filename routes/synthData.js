@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router();
 const storyApi = require('../models/storyApi.js');
 
-/** Home route **/
+/** Synthesizer data route **/
 router.get('/api/stories', async (req, res) => {
     const stories = await storyApi.getStories();
 
