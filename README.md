@@ -20,16 +20,48 @@ For the first week I first initiated npm inside my project to create a package.j
 
 Quickly I found out that the speech API that I chose is clientside only, therefore I had to add a different API to still be able to meet the assignment requirements. The API that I used for the serverside javascript is called Opensheet. With the opensheet API I am able to get the data from google spreadsheets on serverside and then manipulate that data to my usecase, which is using the speech api to actually vocalize the story summary.
 
+``` synthesizer.js
+if (listItem) {
+          const listItems = Array.from(storyList.children);
+          let index = listItems.indexOf(listItem) + 1;
+          index = index.toString();
+        
+          const story = apiStoryListJson.find((story) => {
+            return story.id === index;
+          });
+
+          const summaryUtterance = new SpeechSynthesisUtterance(story.summary);
+  
+          summaryUtterance.onend = (event) => {
+            console.log("SpeechSynthesisUtterance.onend");
+          };
+  
+          summaryUtterance.onerror = (event) => {
+            console.error("SpeechSynthesisUtterance.onerror" + " " + event.error);
+          };
+  
+          synth.speak(summaryUtterance);
+          playButton.classList.remove("show");
+          playButton.classList.add("hide");
+          pauseButton.classList.remove("hide");
+          pauseButton.classList.add("show");
+        } else {
+          console.log("Not a story summary");
+        }
+```
+
 After implementing the opensheet api logic with a fetch I started on refactoring the code into express node.js and ejs. For (REASON FOR MVC HERE) I used the mvc code pattern (Model, View and Controllers). With the finished API logic I setup a route for the home page (as this is the only page that has information for the api) and also immediately set up a controller which gets the information from the API model. In the home controller I get the data from the API and return that data inside the res.render. By doing this I make the fetched data accessible on the home page.
 
 After doing this I created a ejs loop which creates story list items for each item in the array storyData. Then I need to verify if clicked list item is matched with the right ID. By using the event.target.closest() I can solve the problem of matching the list item index with the story.id. During this process I ran into the problem of matching strings with numbers, it took me quite a while to actually figure this out but by consulting a classmate we figured it out, we fixed it using index.toString(). After after we fixed this issue the synthesizer functionality finally worked. 
 
 The next challenge at hand was making the web app actually downloadable. For this we need a manifest.json file which needs to be in the public folder which is used in express. After adding the manifest.json file the last thing to do is to add it in de head like this.
+
 ![Manifest link in head](./public/images/documentation-images/manifest-example.png)
 
 ![manifest template example](./public/images/documentation-images/manifest-template-example.png)
 
 If the manifest is linked correctly and all the information neccesary for download is filled in then your application becomes downloadable and runnable as a actual Progressive Web App.
+
 ![Manifest download example](./public/images/documentation-images/download-example.png)
 
 ### Week 2
@@ -41,9 +73,11 @@ With this information I started doing research on how I would make these functio
 For the install function I created a event, which is triggered when the service worker is installed. The code inside the event listener caches the URLs specified in urlsToCache. First, the cache is opened using caches.open(), and then the assets are added to the cache using cache.addAll(). The event.waitUntil() method makes sure that the service worker will only be installed after the caching is completed.
 
 For the activate I created a event, which is triggered when the service worker becomes active. The code inside the event listener deletes old caches that are no longer needed. It uses caches.keys() to get a list of cache names, and then it filters out the caches that have a name different from cacheName. Finally, it deletes the filtered caches using caches.delete().
+
 ![install and activate example](./public/images/documentation-images/install-activate-example.png)
 
 For the fetch I created a event, when the event is triggered, the service worker checks if there is a cache for the request using caches.match(event.request). If there is a cache, it is returned immediately using return cachedResponse. If there is no cache available for the request, the service worker performs a network request using fetch(event.request). If a valid response is received from the network, with a status of 200 and a response type of basic, it is cached using cache.put(event.request, responseToCache) and returned using return networkResponse. If there is no valid response from the network or if a network error happens, the service worker returns the offline page using return caches.match('/offline').
+
 ![Fetch example](./public/images/documentation-images/fetch-example.png)
 
 These functions will make sure that the service-wroker allows the webapplication to be used offline by returning carched resources even without internect connection. This greatly improves the user experience by providing faster page load and reducing the number of network requests made.
@@ -55,6 +89,7 @@ After finishing the service-worker.js I still had some refactoring to do because
 ![class controle example](./public/images/documentation-images/class-controll-example.png)
 
 Last but not least I arrived at the critcical rendering criteria, I researched about minify using Gulp. It is a nice way of optimalizing the performance of the application. As my web app is quite small it wasn't necessary to use this though. Instead I used cache control on my header and used the font-face display swap to optimalize.
+
 ![Cache control example](./public/images/documentation-images/cachecontrol-example.png)
 ![Swap example](./public/images/documentation-images/font-swap-example.png)
 
